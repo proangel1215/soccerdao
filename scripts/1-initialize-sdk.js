@@ -16,3 +16,22 @@ if (!process.env.WALLET_ADDRESS || process.env.WALLET_ADDRESS == '') {
     console.log('🛑 Private key not found.');
 }
 
+const sdk = new ThirdwebSDK(
+    new ethers.Wallet(
+        process.env.PRIVATE_KEY,
+        ethers.getDefaultProvider(process.env.ALCHEMY_API_URL),
+    ),
+);
+
+(async () => {
+    try {
+        const apps = await sdk.getApps();
+        console.log('Your app address is ', apps[0].address);
+    } catch (error) {
+        console.error('Failed to get apps from sdk: ', error);
+        process.exit(1);
+    }
+})();
+
+// We are exporting the initialized thirdweb SDK so that we can use it in our other scripts
+export default sdk;
