@@ -20,7 +20,7 @@ const app = sdk.getAppModule('0xB36d5A08Cb68720FdF587F9ffc98b5b679DdD74F');
           primarySaleRecipientAddress: /*ethers.constants.AddressZero*/process.env.WALLET_ADDRESS,
         });
         console.log('✅ Successfully deployed bundleDrop module, address: ', bundleDropModule.address);
-        console.log('✅ BundleDrop metadat: ', await bundleDropModule.getMetadata());
+        console.log('✅ BundleDrop metadata: ', await bundleDropModule.getMetadata());
     } catch (error) {
         console.error('Failed to deploy bundleDrop module', error);
     }
