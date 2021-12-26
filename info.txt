@@ -1,2 +1,2 @@
 app address : 0xB36d5A08Cb68720FdF587F9ffc98b5b679DdD74F
-bundleDrop module address : 0x5ebB9FdCCED59a2722a390D370fe4b8a0bAA7849
+bundleDrop module address : 0x4f87e29bA7Ee65e997adDb20BA84bCC4d64A8d5a

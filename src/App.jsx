@@ -6,7 +6,7 @@ import { ThirdwebSDK } from "@3rdweb/sdk";
 const sdk = new ThirdwebSDK("rinkeby");
 
 // We can grab a reference to our ERC-1155 contract.
-const bundleDropModule = sdk.getBundleDropModule('0x5ebB9FdCCED59a2722a390D370fe4b8a0bAA7849');
+const bundleDropModule = sdk.getBundleDropModule('0x4f87e29bA7Ee65e997adDb20BA84bCC4d64A8d5a');
 
 const App = () => {
 
@@ -74,8 +74,8 @@ const App = () => {
         setIsClaiming(false);
       })
       .finally(() => {
-        setHasClaimedNFT(true);
         setIsClaiming(false);
+        setHasClaimedNFT(true);
         console.log(
           `🌊 Successfully Minted! Check it out on OpenSea: https://testnets.opensea.io/assets/${bundleDropModule.address}/0`
         );
@@ -87,14 +87,14 @@ const App = () => {
   if (hasClaimedNFT) {
     return (
       <div className="member-page">
-        <h1>🍪DAO Member Page</h1>
+        <h1>⚽ SoccerDAO Member Page ⚽</h1>
         <p>Congratulations on being a member</p>
       </div>
     );
   } else {
     return (
       <div className="mint-nft">
-        <h1>Mint your free 🍪DAO Membership NFT</h1>
+        <h1>Mint your free ⚽SoccerDAO⚽ Membership NFT</h1>
         <button
           disabled={isClaiming}
           onClick={() => mintNft()}
