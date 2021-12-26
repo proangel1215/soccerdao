@@ -11,8 +11,8 @@ const bundleDrop = sdk.getBundleDropModule('0x5ebB9FdCCED59a2722a390D370fe4b8a0b
             maxQuantityPerTransaction: 1,
         });
         await bundleDrop.setClaimCondition(0, claimConditionFactory);
-        console.log('✅ Successfully set claime condition on bundleDrop: ', bundleDrop.address);
+        console.log('✅ Successfully set claim condition on bundleDrop: ', bundleDrop.address);
     } catch (error) {
-        console.error('Failed to set claim condition', error);
+        console.error('Failed to set claim condition: ', error);
     }
 })();
