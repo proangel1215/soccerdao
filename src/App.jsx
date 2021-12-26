@@ -1,12 +1,18 @@
 import { useEffect, useMemo, useState } from "react";
 import { useWeb3 } from "@3rdweb/hooks";
 import { ThirdwebSDK } from "@3rdweb/sdk";
+import { ethers } from "ethers";
 
 // We instatiate the sdk on Rinkeby.
 const sdk = new ThirdwebSDK("rinkeby");
 
 // We can grab a reference to our ERC-1155 contract.
 const bundleDropModule = sdk.getBundleDropModule('0x4f87e29bA7Ee65e997adDb20BA84bCC4d64A8d5a');
+// We can grab a reference to our ERC-20 token contract.
+const tokenModule = sdk.getTokenModule('0x6A71E4Ce8E12fAf65D0cF8E1ae935DAc9cF334b0');
+
+// A fancy function to shorten someones wallet address, no need to show the whole thing. 
+const shortenAddress = address => address.substring(0, 8) + "..." + address.substring(address.length - 4);
 
 const App = () => {
 
@@ -22,7 +28,51 @@ const App = () => {
   const [hasClaimedNFT, setHasClaimedNFT] = useState(false);
   // isClaiming lets us easily keep a loading state while the NFT is minting.
   const [isClaiming, setIsClaiming] = useState(false);
+  // Holds the amount of token each member has in state.
+  const [memberTokenAmounts, setMemberTokenAmounts] = useState({});
+  // The array holding all of our members addresses.
+  const [memberAddresses, setMemberAddresses] = useState([]);
 
+  useEffect(() => {
+    if ( !hasClaimedNFT ) return;
+
+    // Grab the users who hold our NFT with tokenId 0.
+    bundleDropModule
+      .getAllClaimerAddresses(0)
+      .then(addresses => {
+        console.log("🚀 Members addresses", addresses)
+        setMemberAddresses(addresses);
+      })
+      .catch(err => {
+        console.error('failed to get claimer addresses: ', err);
+      });
+
+    // Grab all the balances.
+    tokenModule
+      .getAllHolderBalances()
+      .then((amounts) => {
+        console.log("👜 Amounts", amounts);
+        setMemberTokenAmounts(amounts);
+      })
+      .catch((err) => {
+        console.error("failed to get token amounts: ", err);
+      });
+  }, [hasClaimedNFT]);
+
+  // Now, we combine the memberAddresses and memberTokenAmounts into a single array
+  const memberList = useMemo(() => {
+    return memberAddresses.map(address => {
+      return {
+        address,
+        tokenAmount: ethers.utils.formatUnits(
+          // If the address isn't in memberTokenAmounts, it means they don't hold any of our token.
+          memberTokenAmounts[address] || 0,
+          18
+          )
+      }
+    });
+  }, [memberAddresses, memberTokenAmounts]);
+  
   useEffect(() => {
     sdk.setProviderOrSigner(signer);
   }, [signer]);
@@ -89,6 +139,29 @@ const App = () => {
       <div className="member-page">
         <h1>⚽ SoccerDAO Member Page ⚽</h1>
         <p>Congratulations on being a member</p>
+        <div>
+          <div>
+            <h2>Member List</h2>
+            <table className="card">
+              <thead>
+                <tr>
+                  <th>Address</th>
+                  <th>Token Amount (SDT)</th>
+                </tr>
+              </thead>
+              <tbody>
+                {
+                  memberList.map((member) => (
+                    <tr key={member.address}>
+                      <td>{shortenAddress(member.address)}</td>
+                      <td>{member.tokenAmount}</td>
+                    </tr>
+                  ))
+                }
+              </tbody>
+            </table>
+          </div>
+        </div>
       </div>
     );
   } else {
