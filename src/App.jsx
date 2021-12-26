@@ -145,6 +145,7 @@ const App = () => {
             <table className="card">
               <thead>
                 <tr>
+                  <th>@</th>
                   <th>Address</th>
                   <th>Token Amount (SDT)</th>
                 </tr>
@@ -153,6 +154,7 @@ const App = () => {
                 {
                   memberList.map((member) => (
                     <tr key={member.address}>
+                      <td>{(member.address==address) ? "👉" : "⚽" }</td>
                       <td>{shortenAddress(member.address)}</td>
                       <td>{member.tokenAmount}</td>
                     </tr>

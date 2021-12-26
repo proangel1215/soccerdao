@@ -1,3 +1,4 @@
-app address : 0xB36d5A08Cb68720FdF587F9ffc98b5b679DdD74F
+app module address : 0xB36d5A08Cb68720FdF587F9ffc98b5b679DdD74F
 bundleDrop module address : 0x4f87e29bA7Ee65e997adDb20BA84bCC4d64A8d5a
 token module address : 0x6A71E4Ce8E12fAf65D0cF8E1ae935DAc9cF334b0
+voting module address : 0x91165ce03cb75EC9CE650BD89C5Ef4f02cB41D9E
