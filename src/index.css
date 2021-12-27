@@ -4,7 +4,7 @@ body {
   font-family: Inter, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: #7700ee;
+  background-color: #30312f;
   color: #fff;
   overflow-x: hidden;
 }
@@ -136,6 +136,6 @@ button:focus {
 }
 
 button:disabled {
-  opacity: 0.8;
+  opacity: 0.5;
   pointer-events: none;
 }
